@@ -106,15 +106,22 @@ test('calls math.add', () => {
   expect(addMock).toHaveBeenCalledWith(1, 2);
 });
 
+//Test3.3
 
+import * as app from '../mathApp';
+import * as math from '../math';
 
+test("calls math.add", () => {
+  const addMock = jest.spyOn(math, "add");
 
+  // override the implementation
+  addMock.mockImplementation(() => "mock");
+  expect(app.doAdd(1, 2)).toEqual("mock");
 
-
-
-
-
-
+  // restore the original implementation
+  addMock.mockRestore();
+  expect(app.doAdd(1, 2)).toEqual(3);
+});
 
 
 
