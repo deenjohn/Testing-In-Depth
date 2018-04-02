@@ -6,7 +6,7 @@
 
 //https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c
 
-
+// https://blog.kentcdodds.com/but-really-what-is-a-javascript-mock-10d060966f7d
 
 
 //Test1
@@ -125,5 +125,124 @@ test('calls callback with arguments added', () => {
 });
 
 .........................................
+
+
+//thumb-war.js
+
+import { getWinner } from './utils';
+
+function thumbWar(player1, player2) {
+  const numberToWin = 2;
+  let player1Wins = 0;
+  let player2Wins = 0;
+  while (player1Wins < numberToWin && player2Wins < numberToWin) {
+    const winner = getWinner(player1, player2);
+    if (winner === player1) {
+      player1Wins++;
+    } else if (winner === player2) {
+      player2Wins++;
+    }
+  }
+  return player1Wins > player2Wins ? player1 : player2;
+}
+
+export default thumbWar;
+
+
+//utils.js
+
+function getWinner(player1, player2) {
+  const winningNumber = Math.random();
+  return winningNumber < 1 / 3
+    ? player1
+    : winningNumber < 2 / 3 ? player2 : null;
+}
+
+export { getWinner };
+
+
+//mock-test1.js
+
+import thumbWar from '../thumb-war';
+import * as utils from '../utils';
+
+test('returns winner', () => {
+  const originalGetWinner = utils.getWinner;
+
+  utils.getWinner = (p1, p2) => p2;
+  
+  const winner = thumbWar('Ken Wheeler', 'Kent C. Dodds');
+  expect(winner).toBe('Kent C. Dodds');
+
+  utils.getWinner = originalGetWinner;
+});
+
+
+//mock-test2.js
+
+import thumbWar from '../thumb-war';
+import * as utils from '../utils';
+
+test('returns winner', () => {
+  const originalGetWinner = utils.getWinner;
+
+  utils.getWinner = (...args) => {
+    utils.getWinner.mock.calls.push(args);
+    return args[1];
+  };
+  utils.getWinner.mock = { calls: [] };
+
+  const winner = thumbWar('Ken Wheeler', 'Kent C. Dodds');
+
+  expect(winner).toBe('Kent C. Dodds');
+  expect(utils.getWinner.mock.calls).toHaveLength(2);
+
+  utils.getWinner.mock.calls.forEach(args => {
+    expect(args).toEqual(['Ken Wheeler', 'Kent C. Dodds']);
+  });
+
+  utils.getWinner = originalGetWinner;
+});
+
+
+//mock.test3.js
+
+import thumbWar from '../thumb-war';
+import * as utils from '../utils';
+
+test('returns winner', () => {
+  const originalGetWinner = utils.getWinner;
+
+	utils.getWinner = jest.fn((p1, p2) => p2);
+	
+  const winner = thumbWar('Ken Wheeler', 'Kent C. Dodds');
+
+  expect(winner).toBe('Kent C. Dodds');
+  expect(utils.getWinner).toHaveBeenCalledTimes(2);
+
+  utils.getWinner.mock.calls.forEach(args => {
+    expect(args).toEqual(['Ken Wheeler', 'Kent C. Dodds']);
+  });
+
+  utils.getWinner = originalGetWinner;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
