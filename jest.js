@@ -6,29 +6,10 @@
 
 //https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c
 
-..............................................
+
+
 
 //Test1
-
-//foo.js
-module.exports = function foo() {};
-
-//foo.test.mockImplementation.js
-
-test('calls callback with arguments added', () => {
-  jest.mock('../foo');
-  const foo = require('../foo');
-
-  foo.mockImplementation(() => 42);
-  //console.log(foo);
-  expect(foo()).toBe(42);
-});
-
-.........................................
-
-
-
-//Test2
 
 const doAdd = (a, b, callback) => {
 	let res =callback(a + b);
@@ -43,7 +24,7 @@ test('calls callback with arguments added', () => {
 
 ..................................................................
 
-//Test3
+//Test2 - jest.mock
 
 //math.js
 export const add = (a, b) => {
@@ -65,12 +46,9 @@ export const doMultiply = (a, b) => math.multiply(a, b);
 export const doDivide = (a, b) => math.divide(a, b);
 
 
-
-
-
 //math.test.jest.mock.js
 
-//Test3.1
+//Test2.1
 
 import * as app from '../mathApp';
 import * as math from '../math';
@@ -94,7 +72,7 @@ test('calls math.subtract', () => {
 
 
 
-// Test3.2
+// Test2.2
 
 import * as app from '../mathApp';
 import * as math from '../math';
@@ -109,7 +87,7 @@ test('calls math.add', () => {
   expect(addMock).toHaveBeenCalledWith(1, 2);
 });
 
-//Test3.3
+//Test2.3
 
 import * as app from '../mathApp';
 import * as math from '../math';
@@ -126,5 +104,26 @@ test("calls math.add", () => {
   expect(app.doAdd(1, 2)).toEqual(3);
 });
 
+
+
+..............................................
+
+//Test1 - understanding jest mock
+
+//foo.js
+module.exports = function foo() {};
+
+//foo.test.mockImplementation.js
+
+test('calls callback with arguments added', () => {
+  jest.mock('../foo');
+  const foo = require('../foo');
+
+  foo.mockImplementation(() => 42);
+  //console.log(foo);
+  expect(foo()).toBe(42);
+});
+
+.........................................
 
 
