@@ -248,6 +248,32 @@ test('returns winner', () => {
 
 
 
+//mock.test5.js
+
+
+import thumbWar from '../thumb-war';
+import * as utilsMock from '../utils2';
+
+jest.mock('../utils');
+
+test('returns winner', () => {
+
+	const winner = thumbWar('Ken Wheeler', 'Kent C. Dodds');
+  expect(winner).toBe('Kent C. Dodds');
+  expect(utilsMock.getWinner).toHaveBeenCalledTimes(2);
+
+	utilsMock.getWinner.mock.calls.forEach(args => {
+    expect(args).toEqual(['Ken Wheeler', 'Kent C. Dodds']);
+
+	});
+
+});
+
+
+
+
+
+
 
 
 
