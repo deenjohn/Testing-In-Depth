@@ -1,4 +1,9 @@
 
+
+..............................................
+
+//Test1
+
 //foo.js
 module.exports = function foo() {};
 
@@ -17,7 +22,7 @@ test('calls callback with arguments added', () => {
 
 
 
-//Test1
+//Test2
 
 const doAdd = (a, b, callback) => {
 	let res =callback(a + b);
@@ -32,7 +37,7 @@ test('calls callback with arguments added', () => {
 
 ..................................................................
 
-
+//Test3
 
 //math.js
 export const add = (a, b) => {
@@ -62,6 +67,8 @@ export const doDivide = (a, b) => math.divide(a, b);
 
 //math.test.jest.mock.js
 
+//Test3.1
+
 import * as app from '../mathApp';
 import * as math from '../math';
 
@@ -83,6 +90,21 @@ test('calls math.subtract', () => {
 
 
 
+
+// Test3.2
+
+import * as app from '../mathApp';
+import * as math from '../math';
+
+test('calls math.add', () => {
+  const addMock = jest.spyOn(math, 'add');
+
+  // calls the original implementation
+  expect(app.doAdd(1, 2)).toEqual(3);
+
+  // and the spy stores the calls to add
+  expect(addMock).toHaveBeenCalledWith(1, 2);
+});
 
 
 
