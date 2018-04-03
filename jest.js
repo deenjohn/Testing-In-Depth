@@ -281,8 +281,47 @@ test('returns winner', () => {
 
 
 
+............................................
+//snapshot testing 
+
+//ActionLink.js
+
+import React from 'react';
+
+class ActionLink extends React.Component {
+  render() {
+    return <button onClick={this.props.onToggle}>Click me</button>;
+  }
+}
+
+export default ActionLink;
 
 
+//ActionLink.test.js
+
+import React from 'react';
+import { mount, render } from 'enzyme';
+import ActionLink from '../ActionLink';
+
+test('renders correctly', () => {
+  const onToggle = jest.fn();
+  const wrapper = mountToggle({
+    onToggle
+  });
+
+  wrapper.find('button').simulate('click');
+  expect(onToggle).toHaveBeenCalledTimes(1);
+});
+
+function mountToggle(props = {}) {
+  const propsToUse = Object.assign(
+    {
+      onToggle() {}
+    },
+    props
+  );
+  return mount(<ActionLink {...propsToUse} />);
+}
 
 
 
