@@ -78,7 +78,7 @@ export default App2;
 
 
 ................................
-//testing 
+//testing  Component
 
 
 import React from 'react';
@@ -186,7 +186,7 @@ describe('App Component', () => {
 });
 
 
-
+//testing  Component Async behaviour
 
 
 import React from 'react';
