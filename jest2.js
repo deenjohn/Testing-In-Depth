@@ -5,6 +5,7 @@
 // https://facebook.github.io/jest/docs/en/jest-object.html#jestspyonobject-methodname
 
 //https://medium.com/@boriscoder/the-hidden-power-of-jest-matchers-f3d86d8101b0
+// https://medium.com/@7ynk3r/react-testing-done-right-24fdb4ef43d8
 
 // component to be tested
 
